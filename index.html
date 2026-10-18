@@ -297,6 +297,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .shelf { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .oc { background: var(--paper-2); border: 2px solid var(--line); border-radius: 16px 26px 16px 22px; padding: 1.3rem; display: grid; gap: .7rem; align-content: start; min-width: 0; }
 .oc.wide { grid-column: span 2; }
+.oc.full { grid-column: 1 / -1; }
+.oc-videos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.oc-videos figure { margin: 0; display: grid; gap: .5rem; min-width: 0; }
+.oc-videos video { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; background: #000; }
+.oc-videos figcaption { font-size: .9rem; color: var(--ink-soft); }
+.oc-videos figcaption b { color: var(--ink); }
+.oc.feature { grid-column: 1 / -1; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 1.4rem; align-items: center; }
+.oc.feature video { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; background: #000; }
+.oc.feature h3 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); }
 .oc .kind { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--terra); }
 .oc h3 { font-family: var(--display); font-weight: 900; font-size: 1.7rem; line-height: 1.02; text-wrap: balance; }
 .oc p { font-size: .95rem; color: var(--ink-soft); }
@@ -308,7 +317,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .oc-files a span:last-child { overflow-wrap: anywhere; }
 .oc-empty { padding: .8rem .9rem; font-family: var(--mono); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
 .oc-sub { font-weight: 700; font-size: .95rem; }
-@media (max-width: 820px) { .shelf { grid-template-columns: minmax(0, 1fr); } .oc.wide { grid-column: auto; } }
+@media (max-width: 820px) { .shelf { grid-template-columns: minmax(0, 1fr); } .oc.wide { grid-column: auto; } .oc.feature, .oc-videos { grid-template-columns: minmax(0, 1fr); } }
 
 /* social media posts */
 .posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
@@ -414,15 +423,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
   <div class="wrap stack" style="gap:2rem">
     <div class="stack">
       <h2 class="brush sand" style="justify-self:start">Six teams, 42 people</h2>
-      <p class="lede">Each team is a group of young people aged 16–24 with one group leader. Most teams are six participants plus a leader; Greece brought four participants and Italy eight. Places go first to young people with fewer opportunities: those from rural areas, those who have lived through bullying or discrimination, members of minority groups and Erasmus+ newcomers.</p>
+      <p class="lede">Each team is a group of young people aged 16–24 with one group leader. Team sizes ranged from four people from Greece to nine from Bulgaria, the host country. Places go first to young people with fewer opportunities: those from rural areas, those who have lived through bullying or discrimination, members of minority groups and Erasmus+ newcomers.</p>
     </div>
     <div class="teams">
-      <div class="team"><h3>Bulgaria</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Host team. Travels by bus, car or train.</p></div>
-      <div class="team"><h3>Greece</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i></div><p>Travels by bus, car or train.</p></div>
-      <div class="team"><h3>Italy</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Travels by bus, train, car or plane.</p></div>
-      <div class="team"><h3>Romania</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Travels by bus, car or train.</p></div>
-      <div class="team"><h3>Spain</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Travels by plane.</p></div>
-      <div class="team"><h3>Türkiye</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Travels by bus, car or train.</p></div>
+      <div class="team"><h3>Bulgaria</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>9 people. Host team. Travelled by bus, car or train.</p></div>
+      <div class="team"><h3>Greece</h3><div class="dots7"><i></i><i></i><i></i><i></i></div><p>4 people. Travelled by bus, car or train.</p></div>
+      <div class="team"><h3>Italy</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>8 people. Travelled by bus, train, car or plane.</p></div>
+      <div class="team"><h3>Romania</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>7 people. Travelled by bus, car or train.</p></div>
+      <div class="team"><h3>Spain</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>7 people. Travelled by plane.</p></div>
+      <div class="team"><h3>Türkiye</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>7 people. Travelled by bus, car or train.</p></div>
     </div>
     <p class="legend"><span><i></i>Participant</span><span class="lead"><i></i>Group leader</span><span>Journeys under 1,200 km use low-emission transport.</span></p>
   </div>
@@ -774,24 +783,34 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
   // outcomes: add files as { type: "video" | "pdf" | "photos" | "link", title: "...", url: "https://..." }
   var OUTCOMES = [
-    { kind: "Video", title: "Final video", text: "The story of the exchange in Bansko, filmed and edited by participants.", groups: [{ files: [] }] },
+    { kind: "Video", title: "Final video", feature: true, text: "The story of the exchange in Bansko, told by the participants themselves, filmed and edited by the video group.", video: { src: "outcomes/final-video.mp4", poster: "outcomes/final-video-poster.jpg", length: "4:13" } },
     { kind: "Magazine", title: "Project magazine", text: "Articles, interviews and photos from the exchange, written and designed by the magazine group.", groups: [{ files: [] }] },
     { kind: "Video", title: "Erasmus+ explained", text: "An educational video for young people who have never heard of youth exchanges.", link: ["#erasmus", "Read our Erasmus+ guide"], groups: [{ files: [] }] },
-    { kind: "Awareness videos", title: "From bullying to action", wide: true, text: "Two groups, two videos on recognising bullying and cyberbullying and doing something about it.", groups: [{ name: "Group 1", files: [] }, { name: "Group 2", files: [] }] },
-    { kind: "Blog and website", title: "This website", here: true, text: "The daily diary, the participants' stories and the Erasmus+ guide, collected in one place." }
+    { kind: "Blog and website", title: "This website", here: true, text: "The daily diary, the participants' stories and the Erasmus+ guide, collected in one place." },
+    { kind: "Awareness videos", title: "From bullying to action", full: true, text: "Two groups, two short films on recognising bullying and doing something about it.", videos: [{ name: "Film 1", src: "outcomes/awareness-video-1.mp4", poster: "outcomes/awareness-video-1-poster.jpg", length: "2:25" }, { name: "Film 2", src: "outcomes/awareness-video-2.mp4", poster: "outcomes/awareness-video-2-poster.jpg", length: "1:11" }] }
   ];
   var TYPE = { video: "Video", pdf: "PDF", photos: "Photos", link: "Link" };
   document.getElementById("shelf").innerHTML = OUTCOMES.map(function (o) {
     var body = "";
+    if (o.videos) {
+      body = '<div class="oc-videos">' + o.videos.map(function (v) {
+        return '<figure><video controls preload="metadata" playsinline poster="' + esc(v.poster) + '" src="' + esc(v.src) + '" aria-label="' + esc(o.title + ", " + v.name) + '"></video><figcaption><b>' + esc(v.name) + '</b> · ' + esc(v.length) + ' · <a href="' + esc(v.src) + '" target="_blank" rel="noopener">Full screen ↗</a></figcaption></figure>';
+      }).join("") + '</div>';
+    }
     if (o.groups) {
       body = '<div class="oc-slots">' + o.groups.map(function (g) {
         var inner = g.files.length
           ? '<div class="oc-files">' + g.files.map(function (f) { return '<a href="' + esc(f.url) + '" target="_blank" rel="noopener"><span class="tag">' + (TYPE[f.type] || "File") + '</span><span>' + esc(f.title) + ' ↗</span></a>'; }).join("") + '</div>'
-          : '<div class="oc-empty todo">Coming after the exchange</div>';
+          : '<div class="oc-empty todo">Coming soon</div>';
         return '<div class="stack" style="gap:.4rem">' + (g.name ? '<span class="oc-sub">' + esc(g.name) + '</span>' : "") + inner + '</div>';
       }).join("") + '</div>';
     }
-    return '<article class="oc' + (o.wide ? " wide" : "") + '"><span class="kind">' + esc(o.kind) + '</span><h3>' + esc(o.title) + '</h3><p>' + esc(o.text) + '</p>' +
+    if (o.video) {
+      return '<article class="oc feature"><video controls preload="metadata" playsinline poster="' + esc(o.video.poster) + '" src="' + esc(o.video.src) + '" aria-label="' + esc(o.title) + '"></video>' +
+        '<div class="stack" style="gap:.7rem"><span class="kind">' + esc(o.kind) + ' · ' + esc(o.video.length) + '</span><h3>' + esc(o.title) + '</h3><p>' + esc(o.text) + '</p>' +
+        '<a href="' + esc(o.video.src) + '" target="_blank" rel="noopener" style="font-weight:500">Open the video in full screen ↗</a></div></article>';
+    }
+    return '<article class="oc' + (o.wide ? " wide" : "") + (o.full ? " full" : "") + '"><span class="kind">' + esc(o.kind) + '</span><h3>' + esc(o.title) + '</h3><p>' + esc(o.text) + '</p>' +
       (o.here ? '<span class="here">You are here</span>' : "") +
       (o.link ? '<a href="' + o.link[0] + '" style="font-weight:500">' + esc(o.link[1]) + ' →</a>' : "") + body + '</article>';
   }).join("");
