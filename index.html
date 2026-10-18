@@ -319,19 +319,29 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .oc-sub { font-weight: 700; font-size: .95rem; }
 @media (max-width: 820px) { .shelf { grid-template-columns: minmax(0, 1fr); } .oc.wide { grid-column: auto; } .oc.feature, .oc-videos { grid-template-columns: minmax(0, 1fr); } }
 
-/* social media posts */
-.posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
-.post { display: grid; grid-template-rows: auto 1fr; background: var(--paper-2); border: 2px solid var(--line); border-radius: 16px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .15s ease; }
-.post:hover { transform: translateY(-3px) rotate(-.5deg); }
-.post img, .post .ph { display: block; width: 100%; max-width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-.post .ph { display: grid; place-items: center; background: color-mix(in srgb, var(--sage) 22%, var(--paper-2)); font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
-.post-body { padding: .9rem 1rem 1rem; display: grid; gap: .45rem; align-content: start; }
-.post-meta { display: flex; justify-content: space-between; gap: .5rem; font-family: var(--mono); font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-soft); }
-.post-meta b { color: var(--terra); font-weight: 500; }
-.post p { font-size: .92rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.post.empty { border-style: dashed; border-color: var(--sage); }
-.post.empty:hover { transform: none; }
-@media (prefers-reduced-motion: reduce) { .post { transition: none; } .post:hover { transform: none; } }
+/* social media carousel */
+.carousel { display: grid; gap: 1rem; }
+.posts { list-style: none; margin: 0; padding: .4rem .2rem 1rem; display: grid; grid-auto-flow: column; grid-auto-columns: clamp(220px, 23%, 270px); gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.post { scroll-snap-align: start; min-width: 0; }
+.post a { height: 100%; aspect-ratio: 4 / 5; display: grid; grid-template-rows: auto 1fr auto auto; gap: .6rem; padding: 1.1rem; border-radius: 18px 30px 18px 26px; text-decoration: none; color: var(--on-color); background: var(--sage); transition: transform .15s ease; }
+.post a:hover { transform: translateY(-4px) rotate(-.6deg); }
+.pf-instagram a { background: var(--terra); }
+.pf-facebook a { background: var(--sand); }
+.pf-blog a { background: var(--band-bg); color: var(--band-fg); }
+.post-top { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.post-n { opacity: .6; }
+.post-tag { align-self: center; font-family: var(--display); font-weight: 900; font-size: clamp(1.7rem, 2.6vw, 2.1rem); line-height: 1; overflow-wrap: anywhere; }
+.post-who { display: grid; gap: .1rem; }
+.post-who b { font-family: var(--display); font-weight: 900; font-size: 1.5rem; line-height: 1.05; }
+.post-who span { font-size: .9rem; opacity: .8; }
+.post-go { font-weight: 700; font-size: .92rem; border-top: 2px solid currentColor; padding-top: .55rem; }
+.car-nav { display: flex; align-items: center; justify-content: flex-end; gap: .6rem; }
+.car-nav .mono { margin-right: auto; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.car-btn { width: 3rem; height: 3rem; border-radius: 50%; border: 2px solid var(--ink); background: none; font-size: 1.2rem; }
+.car-btn:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
+.car-btn:disabled { opacity: .3; cursor: default; }
+@media (max-width: 480px) { .posts { grid-auto-columns: 78%; } }
+@media (prefers-reduced-motion: reduce) { .posts { scroll-behavior: auto; } .post a { transition: none; } .post a:hover { transform: none; } }
 
 /* week in pictures */
 .gallery-h { font-family: var(--display); font-weight: 900; font-size: clamp(1.7rem, 3.6vw, 2.3rem); line-height: 1.05; margin-block: clamp(2.5rem, 6vw, 4rem) 1rem; }
@@ -471,9 +481,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
   <div class="wrap">
     <div class="stack" style="margin-bottom:2rem">
       <h2 class="brush terra" style="justify-self:start">#NoBullying online</h2>
-      <p class="lede">What we posted during and after the exchange: reels, stories and campaign posts from the six teams.</p>
+      <p class="lede">Participants from all six teams shared the exchange on their own channels. Tap a card to read the post.</p>
     </div>
-    <div class="posts" id="posts"></div>
+    <div class="carousel">
+      <ul class="posts" id="posts" aria-label="Participants' posts about the exchange"></ul>
+      <div class="car-nav">
+        <span class="mono" id="posts-count" aria-live="polite"></span>
+        <button type="button" class="car-btn" id="posts-prev" aria-label="Previous posts">←</button>
+        <button type="button" class="car-btn" id="posts-next" aria-label="Next posts">→</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -815,20 +832,116 @@ button { font: inherit; color: inherit; cursor: pointer; }
       (o.link ? '<a href="' + o.link[0] + '" style="font-weight:500">' + esc(o.link[1]) + ' →</a>' : "") + body + '</article>';
   }).join("");
 
-  // social media: add posts as { platform: "Instagram", url: "https://...", image: "social/photo.jpg", caption: "...", date: "12 Oct" }
-  var POSTS = [];
-  var postsEl = document.getElementById("posts");
-  if (POSTS.length) {
-    postsEl.innerHTML = POSTS.map(function (x) {
-      return '<a class="post" href="' + esc(x.url) + '" target="_blank" rel="noopener">' +
-        (x.image ? '<img src="' + esc(x.image) + '" alt="' + esc(x.caption || x.platform) + '" loading="lazy">' : '<span class="ph">' + esc(x.platform) + '</span>') +
-        '<span class="post-body"><span class="post-meta"><b>' + esc(x.platform) + '</b><span>' + esc(x.date || "") + '</span></span><p>' + esc(x.caption || "") + '</p></span></a>';
-    }).join("");
-  } else {
-    postsEl.innerHTML = [1, 2, 3, 4].map(function () {
-      return '<div class="post empty"><span class="ph">Post coming soon</span><span class="post-body"><span class="post-meta"><b>#NoBullying</b><span></span></span></span></div>';
-    }).join("");
+  // social media: participants' own posts. Add more as { name: "First name", country: "Italy", platform: "LinkedIn", url: "https://..." }
+  var POSTS = [
+ {
+  "name": "Sabah Sinem",
+  "country": "Türkiye",
+  "platform": "LinkedIn",
+  "url": "https://www.linkedin.com/posts/sabah-sinem-%C3%A7irci-5354a4443_erasmusplus-act4change-youthexchange-ugcPost-7517141059261464576-bE4L/"
+ },
+ {
+  "name": "Mario",
+  "country": "Spain",
+  "platform": "LinkedIn",
+  "url": "https://lnkd.in/p/eufC9QuS"
+ },
+ {
+  "name": "Sofia",
+  "country": "Italy",
+  "platform": "Instagram",
+  "url": "https://www.instagram.com/p/DedxfFxCKgY/"
+ },
+ {
+  "name": "Marina",
+  "country": "Bulgaria",
+  "platform": "Facebook",
+  "url": "https://www.facebook.com/share/p/19miQ4rqLy/"
+ },
+ {
+  "name": "Vasos",
+  "country": "Greece",
+  "platform": "LinkedIn",
+  "url": "https://lnkd.in/p/dFN2FPeu"
+ },
+ {
+  "name": "Cenk",
+  "country": "Türkiye",
+  "platform": "Blog",
+  "url": "https://act4changecenk.blogspot.com/2026/10/reflections-on-act-4-change-no-bullying.html"
+ },
+ {
+  "name": "Jordan",
+  "country": "Spain",
+  "platform": "Facebook",
+  "url": "https://www.facebook.com/61595292333018/posts/122099699901509744/"
+ },
+ {
+  "name": "Siria",
+  "country": "Italy",
+  "platform": "LinkedIn",
+  "url": "https://www.linkedin.com/posts/siria-russo-81b240412_erasmusplus-youthexchange-act4change-ugcPost-7515856357175185408-vuWP/"
+ },
+ {
+  "name": "Viliyana",
+  "country": "Bulgaria",
+  "platform": "Facebook",
+  "url": "https://www.facebook.com/share/r/14uZW3ut7Mf/"
+ },
+ {
+  "name": "Aslıhan",
+  "country": "Türkiye",
+  "platform": "LinkedIn",
+  "url": "https://lnkd.in/p/eR6NuhCk"
+ },
+ {
+  "name": "Álvaro",
+  "country": "Spain",
+  "platform": "Facebook",
+  "url": "https://www.facebook.com/share/1Dmzudf5VZ/"
+ },
+ {
+  "name": "Alperen",
+  "country": "Italy",
+  "platform": "LinkedIn",
+  "url": "https://lnkd.in/p/eRfgPKSP"
+ },
+ {
+  "name": "Şevval Nehir",
+  "country": "Türkiye",
+  "platform": "LinkedIn",
+  "url": "https://www.linkedin.com/posts/%C5%9Fevval-nehir-ayaz-1a4b3a296_erasmusplus-youthexchange-act4change-ugcPost-7515831823709487104-zqnI/"
+ },
+ {
+  "name": "Doğukan",
+  "country": "Türkiye",
+  "platform": "LinkedIn",
+  "url": "https://lnkd.in/p/duHY9QFW"
+ }
+];
+  var CTA = { LinkedIn: "Read on LinkedIn", Instagram: "See on Instagram", Facebook: "See on Facebook", Blog: "Read the blog post" };
+  var track = document.getElementById("posts");
+  track.innerHTML = POSTS.map(function (x, i) {
+    return '<li class="post pf-' + esc(x.platform.toLowerCase()) + '"><a href="' + esc(x.url) + '" target="_blank" rel="noopener">' +
+      '<span class="post-top"><span class="post-plat">' + esc(x.platform) + '</span><span class="post-n">' + String(i + 1).padStart(2, "0") + '</span></span>' +
+      '<span class="post-tag">#NoBullying</span>' +
+      '<span class="post-who"><b>' + esc(x.name) + '</b><span>' + esc(x.country) + '</span></span>' +
+      '<span class="post-go">' + esc(CTA[x.platform] || "Open the post") + ' ↗</span></a></li>';
+  }).join("");
+  var prevB = document.getElementById("posts-prev"), nextB = document.getElementById("posts-next"), countEl = document.getElementById("posts-count");
+  function step() { var c = track.querySelector(".post"); return c ? c.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 16) : 300; }
+  function updateNav() {
+    var max = track.scrollWidth - track.clientWidth - 2;
+    prevB.disabled = track.scrollLeft <= 2; nextB.disabled = track.scrollLeft >= max;
+    var first = Math.round(track.scrollLeft / step()) + 1, shown = Math.max(1, Math.round(track.clientWidth / step()));
+    countEl.textContent = first + "–" + Math.min(POSTS.length, first + shown - 1) + " of " + POSTS.length;
   }
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  prevB.addEventListener("click", function () { track.scrollBy({ left: -step(), behavior: reduce ? "auto" : "smooth" }); });
+  nextB.addEventListener("click", function () { track.scrollBy({ left: step(), behavior: reduce ? "auto" : "smooth" }); });
+  track.addEventListener("scroll", function () { window.requestAnimationFrame(updateNav); }, { passive: true });
+  window.addEventListener("resize", updateNav);
+  updateNav();
 
   // routing: the Erasmus+ guide is its own page
   var homeEl = document.getElementById("home"), eraEl = document.getElementById("erasmus-page"), navEra = document.getElementById("nav-erasmus");
