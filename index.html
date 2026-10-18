@@ -321,9 +321,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* social media carousel */
 .carousel { display: grid; gap: 1rem; }
-.posts { list-style: none; margin: 0; padding: .4rem .2rem 1rem; display: grid; grid-auto-flow: column; grid-auto-columns: clamp(220px, 23%, 270px); gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.posts { list-style: none; margin: 0; padding: .4rem .2rem 1rem; display: grid; grid-auto-flow: column; grid-auto-columns: clamp(240px, 31%, 340px); gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: thin; }
 .post { scroll-snap-align: start; min-width: 0; }
-.post a { height: 100%; aspect-ratio: 4 / 5; display: grid; grid-template-rows: auto 1fr auto auto; gap: .6rem; padding: 1.1rem; border-radius: 18px 30px 18px 26px; text-decoration: none; color: var(--on-color); background: var(--sage); transition: transform .15s ease; }
+.post a { height: 100%; min-height: 22rem; display: grid; grid-template-rows: auto 1fr auto auto; gap: .6rem; padding: 1.1rem; border-radius: 18px 30px 18px 26px; text-decoration: none; color: var(--on-color); background: var(--sage); transition: transform .15s ease; }
 .post a:hover { transform: translateY(-4px) rotate(-.6deg); }
 .pf-instagram a { background: var(--terra); }
 .pf-facebook a { background: var(--sand); }
@@ -335,6 +335,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .post-who b { font-family: var(--display); font-weight: 900; font-size: 1.5rem; line-height: 1.05; }
 .post-who span { font-size: .9rem; opacity: .8; }
 .post-go { font-weight: 700; font-size: .92rem; border-top: 2px solid currentColor; padding-top: .55rem; }
+.post.shot a { padding: 0; gap: 0; grid-template-rows: auto 1fr; background: var(--paper-2); color: var(--ink); border: 2px solid var(--line); overflow: hidden; }
+.shot-img { position: relative; display: block; aspect-ratio: 560 / 520; overflow: hidden; background: #fff; }
+.shot-img img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.shot-img::after { content: ""; position: absolute; inset: auto 0 0 0; height: 30%; background: linear-gradient(transparent, var(--paper-2)); }
+.shot-foot { display: grid; gap: .45rem; padding: .3rem 1rem 1rem; align-content: end; }
+.shot-foot .post-plat { justify-self: start; font-family: var(--mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; padding: .12rem .55rem; border-radius: 99px; background: var(--sage); color: var(--on-color); }
+.pf-instagram .shot-foot .post-plat { background: var(--terra); }
+.pf-blog .shot-foot .post-plat { background: var(--band-bg); color: var(--band-fg); }
+.shot-foot .post-who b { font-size: 1.3rem; }
+.post.shot a:hover { border-color: var(--terra); }
 .car-nav { display: flex; align-items: center; justify-content: flex-end; gap: .6rem; }
 .car-nav .mono { margin-right: auto; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .car-btn { width: 3rem; height: 3rem; border-radius: 50%; border: 2px solid var(--ink); background: none; font-size: 1.2rem; }
@@ -481,7 +491,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   <div class="wrap">
     <div class="stack" style="margin-bottom:2rem">
       <h2 class="brush terra" style="justify-self:start">#NoBullying online</h2>
-      <p class="lede">Participants from all six teams shared the exchange on their own channels. Tap a card to read the post.</p>
+      <p class="lede">Participants shared the exchange on their own channels. Tap a post to read it in full.</p>
     </div>
     <div class="carousel">
       <ul class="posts" id="posts" aria-label="Participants' posts about the exchange"></ul>
@@ -836,18 +846,21 @@ button { font: inherit; color: inherit; cursor: pointer; }
   var POSTS = [
  {
   "name": "Sabah Sinem",
+  "image": "social/sabah.jpg",
   "country": "Türkiye",
   "platform": "LinkedIn",
   "url": "https://www.linkedin.com/posts/sabah-sinem-%C3%A7irci-5354a4443_erasmusplus-act4change-youthexchange-ugcPost-7517141059261464576-bE4L/"
  },
  {
   "name": "Mario",
+  "image": "social/mario.jpg",
   "country": "Spain",
   "platform": "LinkedIn",
   "url": "https://lnkd.in/p/eufC9QuS"
  },
  {
   "name": "Sofia",
+  "image": "social/sofia.jpg",
   "country": "Italy",
   "platform": "Instagram",
   "url": "https://www.instagram.com/p/DedxfFxCKgY/"
@@ -860,12 +873,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
  },
  {
   "name": "Vasos",
+  "image": "social/vasos.jpg",
   "country": "Greece",
   "platform": "LinkedIn",
   "url": "https://lnkd.in/p/dFN2FPeu"
  },
  {
   "name": "Cenk",
+  "image": "social/cenk.jpg",
   "country": "Türkiye",
   "platform": "Blog",
   "url": "https://act4changecenk.blogspot.com/2026/10/reflections-on-act-4-change-no-bullying.html"
@@ -878,6 +893,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
  },
  {
   "name": "Siria",
+  "image": "social/siria.jpg",
   "country": "Italy",
   "platform": "LinkedIn",
   "url": "https://www.linkedin.com/posts/siria-russo-81b240412_erasmusplus-youthexchange-act4change-ugcPost-7515856357175185408-vuWP/"
@@ -890,6 +906,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
  },
  {
   "name": "Aslıhan",
+  "image": "social/aslihan.jpg",
   "country": "Türkiye",
   "platform": "LinkedIn",
   "url": "https://lnkd.in/p/eR6NuhCk"
@@ -902,18 +919,21 @@ button { font: inherit; color: inherit; cursor: pointer; }
  },
  {
   "name": "Alperen",
+  "image": "social/alperen.jpg",
   "country": "Italy",
   "platform": "LinkedIn",
   "url": "https://lnkd.in/p/eRfgPKSP"
  },
  {
   "name": "Şevval Nehir",
+  "image": "social/sevval.jpg",
   "country": "Türkiye",
   "platform": "LinkedIn",
   "url": "https://www.linkedin.com/posts/%C5%9Fevval-nehir-ayaz-1a4b3a296_erasmusplus-youthexchange-act4change-ugcPost-7515831823709487104-zqnI/"
  },
  {
   "name": "Doğukan",
+  "image": "social/dogukan.jpg",
   "country": "Türkiye",
   "platform": "LinkedIn",
   "url": "https://lnkd.in/p/duHY9QFW"
@@ -922,6 +942,12 @@ button { font: inherit; color: inherit; cursor: pointer; }
   var CTA = { LinkedIn: "Read on LinkedIn", Instagram: "See on Instagram", Facebook: "See on Facebook", Blog: "Read the blog post" };
   var track = document.getElementById("posts");
   track.innerHTML = POSTS.map(function (x, i) {
+    if (x.image) {
+      return '<li class="post shot pf-' + esc(x.platform.toLowerCase()) + '"><a href="' + esc(x.url) + '" target="_blank" rel="noopener">' +
+        '<span class="shot-img"><img src="' + esc(x.image) + '" alt="' + esc(x.name) + '\'s ' + esc(x.platform) + ' post about the exchange" loading="lazy" width="560" height="643"></span>' +
+        '<span class="shot-foot"><span class="post-plat">' + esc(x.platform) + '</span><span class="post-who"><b>' + esc(x.name) + '</b><span>' + esc(x.country) + '</span></span>' +
+        '<span class="post-go">' + esc(CTA[x.platform] || "Open the post") + ' ↗</span></span></a></li>';
+    }
     return '<li class="post pf-' + esc(x.platform.toLowerCase()) + '"><a href="' + esc(x.url) + '" target="_blank" rel="noopener">' +
       '<span class="post-top"><span class="post-plat">' + esc(x.platform) + '</span><span class="post-n">' + String(i + 1).padStart(2, "0") + '</span></span>' +
       '<span class="post-tag">#NoBullying</span>' +
@@ -934,7 +960,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
     var max = track.scrollWidth - track.clientWidth - 2;
     prevB.disabled = track.scrollLeft <= 2; nextB.disabled = track.scrollLeft >= max;
     var first = Math.round(track.scrollLeft / step()) + 1, shown = Math.max(1, Math.round(track.clientWidth / step()));
-    countEl.textContent = first + "–" + Math.min(POSTS.length, first + shown - 1) + " of " + POSTS.length;
+    var last = Math.min(POSTS.length, first + shown - 1);
+    countEl.textContent = (last > first ? first + "–" + last : first) + " of " + POSTS.length;
   }
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   prevB.addEventListener("click", function () { track.scrollBy({ left: -step(), behavior: reduce ? "auto" : "smooth" }); });
