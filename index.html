@@ -288,6 +288,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .teaser:hover { transform: rotate(-.4deg); }
 .teaser .mono { color: var(--sand); }
 .teaser-h { font-family: var(--display); font-weight: 900; font-size: clamp(1.9rem, 4.6vw, 3rem); line-height: 1; text-wrap: balance; }
+.watch { display: inline-block; margin: 0 0 1.5rem 1.5rem; font-weight: 500; text-decoration: none; border-bottom: 2px solid var(--sage); }
 .back { display: inline-block; margin-bottom: 1.5rem; font-weight: 500; text-decoration: none; border-bottom: 2px solid var(--terra); }
 .nav a[aria-current="page"] { border-bottom-color: var(--terra); }
 @media (max-width: 820px) { .share { grid-template-columns: minmax(0, 1fr); } }
@@ -304,6 +305,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .oc-videos figcaption { font-size: .9rem; color: var(--ink-soft); }
 .oc-videos figcaption b { color: var(--ink); }
 .oc.feature { grid-column: 1 / -1; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 1.4rem; align-items: center; }
+.oc.feature.reverse { grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr); }
+.oc.feature.reverse video { order: 2; }
 .oc.feature video { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; background: #000; }
 .oc.feature h3 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); }
 .oc .kind { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--terra); }
@@ -317,7 +320,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .oc-files a span:last-child { overflow-wrap: anywhere; }
 .oc-empty { padding: .8rem .9rem; font-family: var(--mono); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
 .oc-sub { font-weight: 700; font-size: .95rem; }
-@media (max-width: 820px) { .shelf { grid-template-columns: minmax(0, 1fr); } .oc.wide { grid-column: auto; } .oc.feature, .oc-videos { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 820px) { .shelf { grid-template-columns: minmax(0, 1fr); } .oc.wide { grid-column: auto; } .oc.feature, .oc.feature.reverse, .oc-videos { grid-template-columns: minmax(0, 1fr); } .oc.feature.reverse video { order: 0; } }
 
 /* social media carousel */
 .carousel { display: grid; gap: 1rem; }
@@ -520,6 +523,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 <section class="sec tint" id="erasmus-guide">
   <div class="wrap">
     <a class="back" href="#top">← Back to ACT 4 Change: #NoBullying</a>
+    <a class="watch" href="#outcomes">▶ Prefer video? Watch our 3-minute Erasmus+ explainer</a>
     <div class="stack" style="margin-bottom:2rem">
       <h2 class="brush" style="justify-self:start">Erasmus+ is more than a semester abroad</h2>
       <p class="lede">Most people hear "Erasmus" and think of a university student spending a semester in another country. That is one part of it. Erasmus+ is the European Union's programme for education, training, youth and sport, and much of it is for young people who are not at university at all. This exchange is one example. Here are the ways in.</p>
@@ -811,10 +815,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
   // outcomes: add files as { type: "video" | "pdf" | "photos" | "link", title: "...", url: "https://..." }
   var OUTCOMES = [
     { kind: "Video", title: "Final video", feature: true, text: "The story of the exchange in Bansko, told by the participants themselves, filmed and edited by the video group.", video: { src: "outcomes/final-video.mp4", poster: "outcomes/final-video-poster.jpg", length: "4:13" } },
-    { kind: "Magazine", title: "Project magazine", text: "Articles, interviews and photos from the exchange, written and designed by the magazine group.", groups: [{ files: [] }] },
-    { kind: "Video", title: "Erasmus+ explained", text: "An educational video for young people who have never heard of youth exchanges.", link: ["#erasmus", "Read our Erasmus+ guide"], groups: [{ files: [] }] },
-    { kind: "Blog and website", title: "This website", here: true, text: "The daily diary, the participants' stories and the Erasmus+ guide, collected in one place." },
-    { kind: "Awareness videos", title: "From bullying to action", full: true, text: "Two groups, two short films on recognising bullying and doing something about it.", videos: [{ name: "Film 1", src: "outcomes/awareness-video-1.mp4", poster: "outcomes/awareness-video-1-poster.jpg", length: "2:25" }, { name: "Film 2", src: "outcomes/awareness-video-2.mp4", poster: "outcomes/awareness-video-2-poster.jpg", length: "1:11" }] }
+    { kind: "Educational video", title: "Erasmus+ explained", reverse: true, text: "A short explainer made by participants for young people who think Erasmus+ only means a semester at university.", link: ["#erasmus", "Read our Erasmus+ guide"], video: { src: "outcomes/erasmus-explained.mp4", poster: "outcomes/erasmus-explained-poster.jpg", length: "2:54" } },
+    { kind: "Awareness videos", title: "From bullying to action", full: true, text: "Two groups, two short films on recognising bullying and doing something about it.", videos: [{ name: "Film 1", src: "outcomes/awareness-video-1.mp4", poster: "outcomes/awareness-video-1-poster.jpg", length: "2:25" }, { name: "Film 2", src: "outcomes/awareness-video-2.mp4", poster: "outcomes/awareness-video-2-poster.jpg", length: "1:11" }] },
+    { kind: "Magazine", title: "Project magazine", wide: true, text: "Articles, interviews and photos from the exchange, written and designed by the magazine group.", groups: [{ files: [] }] },
+    { kind: "Blog and website", title: "This website", here: true, text: "The daily diary, the participants' stories and the Erasmus+ guide, collected in one place." }
   ];
   var TYPE = { video: "Video", pdf: "PDF", photos: "Photos", link: "Link" };
   document.getElementById("shelf").innerHTML = OUTCOMES.map(function (o) {
@@ -833,9 +837,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
       }).join("") + '</div>';
     }
     if (o.video) {
-      return '<article class="oc feature"><video controls preload="metadata" playsinline poster="' + esc(o.video.poster) + '" src="' + esc(o.video.src) + '" aria-label="' + esc(o.title) + '"></video>' +
+      return '<article class="oc feature' + (o.reverse ? " reverse" : "") + '"><video controls preload="metadata" playsinline poster="' + esc(o.video.poster) + '" src="' + esc(o.video.src) + '" aria-label="' + esc(o.title) + '"></video>' +
         '<div class="stack" style="gap:.7rem"><span class="kind">' + esc(o.kind) + ' · ' + esc(o.video.length) + '</span><h3>' + esc(o.title) + '</h3><p>' + esc(o.text) + '</p>' +
-        '<a href="' + esc(o.video.src) + '" target="_blank" rel="noopener" style="font-weight:500">Open the video in full screen ↗</a></div></article>';
+        '<a href="' + esc(o.video.src) + '" target="_blank" rel="noopener" style="font-weight:500">Open the video in full screen ↗</a>' +
+        (o.link ? '<a href="' + o.link[0] + '" style="font-weight:500">' + esc(o.link[1]) + ' →</a>' : "") + '</div></article>';
     }
     return '<article class="oc' + (o.wide ? " wide" : "") + (o.full ? " full" : "") + '"><span class="kind">' + esc(o.kind) + '</span><h3>' + esc(o.title) + '</h3><p>' + esc(o.text) + '</p>' +
       (o.here ? '<span class="here">You are here</span>' : "") +
