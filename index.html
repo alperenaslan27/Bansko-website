@@ -362,6 +362,38 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .gallery figure { break-inside: avoid; margin: 0 0 .7rem; position: relative; }
 .gallery img { display: block; width: 100%; height: auto; border-radius: 10px; }
 .gallery figcaption { position: absolute; left: .5rem; bottom: .5rem; background: var(--band-bg); color: var(--band-fg); font-family: var(--mono); font-size: .68rem; letter-spacing: .05em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 99px; }
+
+[hidden] { display: none !important; }
+/* open story wall */
+.story-form { display: grid; gap: .9rem; align-content: start; }
+.story-form label { display: grid; gap: .3rem; font-size: .92rem; font-weight: 500; }
+.story-form input, .story-form select, .story-form textarea, .admin input { font: inherit; font-weight: 400; color: var(--ink); background: var(--paper); border: 2px solid var(--line); border-radius: 10px; padding: .6rem .75rem; width: 100%; }
+.story-form textarea { resize: vertical; min-height: 7.5rem; }
+.story-form input:focus, .story-form select:focus, .story-form textarea:focus, .admin input:focus { outline: none; border-color: var(--terra); }
+.form-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .8rem; }
+.count { justify-self: end; font-size: .72rem; color: var(--ink-soft); font-weight: 400; }
+.story-form .check { grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: .6rem; font-weight: 400; color: var(--ink-soft); }
+.story-form .check input { width: 1.15rem; height: 1.15rem; margin-top: .15rem; accent-color: var(--terra); }
+.hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-go { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1rem; }
+.form-msg { font-size: .92rem; }
+.form-msg.err { color: var(--terra); font-weight: 500; }
+.form-msg.ok { color: var(--ink); font-weight: 500; }
+.btn:disabled { opacity: .55; cursor: default; filter: none; }
+.btn.ghost { background: none; border: 2px solid var(--ink); color: var(--ink); padding: .55rem 1.2rem; }
+.btn.ghost:hover:not(:disabled) { background: var(--ink); color: var(--paper); filter: none; }
+.wall-status { margin-block: 2rem 1rem; color: var(--ink-soft); }
+.exp time { font-family: var(--mono); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-soft); }
+.exp blockquote { white-space: pre-line; overflow-wrap: anywhere; margin: 0; }
+.exp-foot { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
+.wall-more { display: flex; justify-content: center; margin-top: .5rem; }
+.admin { margin-top: 1.5rem; padding: 1.2rem; border: 2px dashed var(--terra); border-radius: 14px; display: grid; gap: .8rem; }
+.admin-head { display: flex; gap: .7rem; align-items: center; flex-wrap: wrap; }
+.admin-row { display: flex; gap: .7rem; align-items: end; flex-wrap: wrap; }
+.admin-row label { display: grid; gap: .3rem; font-size: .9rem; font-weight: 500; flex: 1 1 14rem; }
+.rm { justify-self: start; background: none; border: 2px solid var(--terra); color: var(--terra); border-radius: 99px; padding: .2rem .8rem; font-size: .82rem; font-weight: 500; }
+.rm:hover { background: var(--terra); color: var(--on-color); }
+@media (max-width: 480px) { .form-row { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body>
@@ -428,7 +460,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   <div class="wrap">
     <div class="stack" style="margin-bottom:2rem">
       <h2 class="brush terra" style="justify-self:start">Day by day</h2>
-      <p class="lede">Nine programme days, 6 to 14 October, between the travel days. Pick a date to see the programme, photos and the team's notes.</p>
+      <p class="lede">Nine programme days, 6 to 14 October, between the travel days. Pick a date to see the programme and photos.</p>
     </div>
     <div class="strip" id="strip" role="group" aria-label="Choose a day"></div>
     <article class="day" id="day" aria-live="polite"></article>
@@ -464,19 +496,34 @@ button { font: inherit; color: inherit; cursor: pointer; }
   <div class="wrap">
     <div class="stack" style="margin-bottom:2rem">
       <h2 class="brush terra" style="justify-self:start">In our own words</h2>
-      <p class="lede">Participants from all six teams on what the exchange meant to them.</p>
+      <p class="lede">Participants, partners and anyone who followed the project, on what ACT 4 Change: #NoBullying meant to them.</p>
     </div>
     <div class="share">
       <div class="stack" style="gap:.8rem">
-        <h3>Were you in Bansko? Share your story.</h3>
-        <p>Post a few lines and one photo you like on our story board. No account needed. Answer one question or all three:</p>
+        <h3>Add your words to the wall</h3>
+        <p>Write a few lines. Answer one of these, or say something of your own:</p>
         <ol class="prompts"><li>A moment from the week you will not forget.</li><li>Something you see differently now about bullying or online hate.</li><li>One thing you will do back home.</li></ol>
+        <p class="fine">Posts go up straight away. Offensive words, links and contact details are blocked, and the organisers remove anything that breaks the spirit of the project. Please don't name other people.</p>
       </div>
-      <div class="share-go">
-        <span class="tag">To add</span><p class="mono">The story board opens soon</p>
-        <p class="fine">The board is where you can read everyone's stories too. Please sign with your first name and country, and only post photos of people who agreed to be in them.</p>
-      </div>
+      <form class="story-form" id="story-form" novalidate>
+        <div class="form-row">
+          <label for="st-name">First name<input id="st-name" name="name" maxlength="30" autocomplete="given-name" required></label>
+          <label for="st-country">Country<select id="st-country" name="country" required><option value="">Choose…</option><option>Bulgaria</option><option>Greece</option><option>Italy</option><option>Romania</option><option>Spain</option><option>Türkiye</option><option>Other</option></select></label>
+        </div>
+        <label for="st-text">Your words<textarea id="st-text" name="text" rows="5" maxlength="600" required></textarea><span class="count mono" id="st-count">0 / 600</span></label>
+        <label class="hp" for="st-website" aria-hidden="true">Website<input id="st-website" name="website" tabindex="-1" autocomplete="off"></label>
+        <label class="check" for="st-ok"><input type="checkbox" id="st-ok" required> I'm happy for this to be shown publicly with my first name and country.</label>
+        <div class="form-go"><button type="submit" class="btn" id="st-send">Post to the wall</button><p class="form-msg" id="st-msg" role="status" aria-live="polite"></p></div>
+      </form>
     </div>
+    <div class="admin" id="admin" hidden>
+      <div class="admin-head"><span class="tag">Organisers only</span><b>Moderate the wall</b></div>
+      <div class="admin-row"><label for="ad-key">Admin key<input id="ad-key" type="password" autocomplete="off"></label><button type="button" class="btn ghost" id="ad-unlock">Unlock</button><button type="button" class="btn ghost" id="ad-lock" hidden>Lock</button></div>
+      <p class="fine" id="ad-msg" aria-live="polite">Enter the admin key to show a Remove button on every post.</p>
+    </div>
+    <p class="wall-status mono" id="wall-status">Loading stories…</p>
+    <div class="exp-grid" id="wall"></div>
+    <div class="wall-more"><button type="button" class="btn ghost" id="wall-more" hidden>Show more</button></div>
   </div>
 </section>
 
@@ -630,6 +677,97 @@ button { font: inherit; color: inherit; cursor: pointer; }
 </footer>
 
 <script>
+// Same word rules as netlify/lib/filter.mjs, for instant feedback. The server does the real check.
+(function () {
+
+const WORDS = [
+  // English
+  "fuck*", "*fuck*", "shit", "shits", "shitty", "shitting", "shithole*", "shithead*", "bullshit*", "horseshit", "bitch*", "bastard*", "asshole*", "ass", "arse", "arsehole*", "dick", "dickhead*",
+  "cock", "cocksucker*", "cunt*", "pussy", "wanker*", "twat*", "slut*", "whore*", "retard*", "faggot*", "fag", "fags",
+  "nigger*", "nigga*", "kys", "dumbass*", "jackass*", "motherfucker*",
+  // Turkish
+  "amk", "aq", "aminakoy*", "aminakoyim", "amcik*", "*orospu*", "picler", "piclik", "*siktir*",
+  "sikerim", "sikeyim", "sikik", "sik", "sikis*", "sikim", "siktim", "yarrak*", "yarak", "gotveren*", "ibne*", "kahpe*",
+  "pezevenk*", "serefsiz*", "gavat*", "kaltak*", "yavsak*", "pust", "pustt",
+  // Italian
+  "cazzo", "cazzi", "cazzata*", "cazzone*", "*fanculo*", "stronz*", "puttan*", "troia", "troie", "merda*", "coglion*",
+  "minchia*", "porcodio", "porcamadonna", "frocio*", "froci", "ricchion*", "zoccola*", "mignotta*", "bastardo*", "bastarda*",
+  // Spanish
+  "puta*", "puto*", "hijoputa*", "mierda*", "joder", "jodete", "jodido*", "cabron*", "gilipollas", "pendejo*", "maricon*",
+  "zorra", "zorras", "capullo*", "follar*", "chinga*", "pinche", "culero*", "mamon*", "polla", "pollas", "verga",
+  // Romanian
+  "pula", "pulii", "pizda*", "muie", "muist*", "futu", "futui", "fututi", "futeti", "tarfa", "tarfe", "poponar*",
+  "bulangiu*", "labagiu*", "cacat",
+  // Bulgarian (Cyrillic and Latin)
+  "путка*", "пичка*", "педераст*", "педал", "педали", "курва*", "курво", "шибан*", "еба", "ебал*", "ебан*", "ебем*",
+  "копеле", "копелета", "лайно", "putka*", "pichka*", "kurva*", "shiban*", "ebal*", "eban*", "ebem*", "kopele",
+  // Greek (Greek script and Greeklish)
+  "μαλακα", "μαλακασ", "μαλακεσ", "μαλακισμενε", "μαλακισμενη", "μαλακισμενοσ", "γαμω*", "γαμησου", "γαμιεσαι",
+  "γαμημενε", "γαμημενη", "πουστη*", "πουστησ", "πουτανα*", "καριολη*", "μουνι*", "αρχιδι*", "σκατα",
+  "malaka*", "gamw*", "gamiesai", "gamisou", "gamhmene", "poutana*", "pousti*", "kariolh*", "kariolis", "mouni",
+];
+
+const PHRASES = [
+  "kill yourself", "go kill yourself", "go die", "hijo de puta", "porco dio", "porca madonna", "sugi pula", "mortii tai",
+  "mortii mati", "mamka ti", "мамка ти", "ana sini", "anani sik", "amina koy", "son of a bitch", "piece of shit",
+];
+
+const LEET = { "0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "8": "b", "@": "a", "$": "s", "!": "i" };
+
+function normalise(text) {
+  return String(text)
+    .replace(/İ/g, "i").replace(/I/g, "i").toLowerCase()
+    .replace(/ı/g, "i").replace(/ς/g, "σ")
+    .normalize("NFKD").replace(/\p{M}+/gu, "")
+    .replace(/[0134578@$!]/g, (c) => LEET[c]);
+}
+
+const collapse = (w) => w.replace(/(\p{L})\1+/gu, "$1");
+
+const exact = new Set(), prefix = [], infix = [];
+for (const w of WORDS) {
+  if (w.startsWith("*") && w.endsWith("*")) infix.push(w.slice(1, -1));
+  else if (w.endsWith("*")) prefix.push(w.slice(0, -1));
+  else exact.add(w);
+}
+const collapsedExact = new Set([...exact].map(collapse).filter((w) => w.length >= 4));
+const collapsedPrefix = prefix.map(collapse).filter((w) => w.length >= 4);
+const collapsedInfix = infix.map(collapse).filter((w) => w.length >= 4);
+
+function badToken(t) {
+  if (!t) return false;
+  if (exact.has(t) || prefix.some((p) => t.startsWith(p)) || infix.some((p) => t.includes(p))) return true;
+  const c = collapse(t);
+  if (c === t) return false;
+  return collapsedExact.has(c) || collapsedPrefix.some((p) => c.startsWith(p)) || collapsedInfix.some((p) => c.includes(p));
+}
+
+function hasBadWords(text) {
+  const n = normalise(text);
+  const tokens = n.split(/[^\p{L}]+/u).filter(Boolean);
+  if (tokens.some(badToken)) return true;
+  // Letters spaced or dotted out: "f u c k", "s.i.k.t.i.r"
+  let run = "";
+  for (const t of [...tokens, ""]) {
+    if (t.length === 1) { run += t; continue; }
+    if (run.length >= 3 && badToken(run)) return true;
+    run = "";
+  }
+  const joined = " " + tokens.join(" ") + " ";
+  return PHRASES.some((p) => joined.includes(" " + normalise(p) + " "));
+}
+
+function hasContactOrLink(text) {
+  const s = String(text).toLowerCase();
+  return /https?:\/\/|www\.|\b[a-z0-9-]+\.(com|net|org|info|io|ly|me|tk|ru|xyz|link|click|top)\b/.test(s)
+    || /[^\s@]+@[^\s@]+\.[a-z]{2,}/.test(s)
+    || /(?:\d[\s.-]?){8,}/.test(s);
+}
+
+window.A4C_FILTER = { hasBadWords: hasBadWords, hasContactOrLink: hasContactOrLink };
+})();
+</script>
+<script>
 (function () {
   // To publish a day: add `diary: "text"` and `photos: [{src: "...", alt: "..."}]` to its entry.
   // Day photos live in the photos/ folder, named by date.
@@ -774,11 +912,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
     } else {
       photos = '<a class="nophotos" href="#gallery"><span class="mono">Photos from this day are on their way</span><span>Meanwhile, see the week in pictures ↓</span></a>';
     }
-    var diary = d.diary
-      ? '<div class="diary filled"><p>' + esc(d.diary) + '</p></div>'
-      : s === "next"
-        ? '<div class="diary todo"><span class="tag" style="justify-self:start">Coming up</span><p>This day has not happened yet. Photos and the team\'s notes appear here afterwards.</p></div>'
-        : '<div class="diary todo"><span class="tag" style="justify-self:start">To add</span><p>The team\'s notes for this day: what happened, who led it, and one thing that surprised us.</p></div>';
+    var diary = d.diary ? '<div class="diary filled"><p>' + esc(d.diary) + '</p></div>' : "";
 
     panel.innerHTML =
       '<div class="day-left"><div class="day-head"><p class="mono">' + d.wd + ' ' + d.iso.slice(8) + ' October 2026 · ' + LABEL[s] + '</p>' +
@@ -974,6 +1108,90 @@ button { font: inherit; color: inherit; cursor: pointer; }
   track.addEventListener("scroll", function () { window.requestAnimationFrame(updateNav); }, { passive: true });
   window.addEventListener("resize", updateNav);
   updateNav();
+
+  // ---- open story wall (stored by the Netlify function at /api/stories) ----
+  var API = "/api/stories", MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var wallEl = document.getElementById("wall"), wallStatus = document.getElementById("wall-status"), moreBtn = document.getElementById("wall-more");
+  var wall = { stories: [], shown: 12 }, adminKey = "";
+  try { adminKey = sessionStorage.getItem("a4c-admin") || ""; } catch (e) {}
+  function fmt(iso) { var d = new Date(iso); return isNaN(d) ? "" : d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear(); }
+  function renderWall() {
+    var list = wall.stories.slice(0, wall.shown);
+    wallStatus.textContent = wall.stories.length ? wall.stories.length + (wall.stories.length === 1 ? " story" : " stories") + " so far" : "No stories yet. Be the first to add yours.";
+    wallEl.innerHTML = list.map(function (x) {
+      return '<figure class="exp"><blockquote>' + esc(x.text) + '</blockquote><div class="exp-foot"><figcaption class="who">' + esc(x.name) + ", " + esc(x.country) + '</figcaption><time datetime="' + esc(x.at) + '">' + fmt(x.at) + "</time></div>" +
+        (adminKey ? '<button type="button" class="rm" data-rm="' + esc(x.id) + '">Remove</button>' : "") + "</figure>";
+    }).join("");
+    moreBtn.hidden = wall.stories.length <= wall.shown;
+  }
+  function loadWall() {
+    fetch(API, { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) { wall.stories = d.stories || []; renderWall(); })
+      .catch(function () {
+        wallStatus.textContent = location.protocol === "file:" ? "Stories show on the live website: act4change-no-bullying.netlify.app" : "Stories couldn't load right now. Please refresh the page in a moment.";
+      });
+  }
+  moreBtn.addEventListener("click", function () { wall.shown += 12; renderWall(); });
+
+  var form = document.getElementById("story-form"), sendBtn = document.getElementById("st-send"), msg = document.getElementById("st-msg");
+  var fName = document.getElementById("st-name"), fCountry = document.getElementById("st-country"), fText = document.getElementById("st-text"), fOk = document.getElementById("st-ok"), fHp = document.getElementById("st-website");
+  var countEl2 = document.getElementById("st-count");
+  fText.addEventListener("input", function () { countEl2.textContent = fText.value.length + " / 600"; });
+  function say(t, kind) { msg.textContent = t; msg.className = "form-msg" + (kind ? " " + kind : ""); }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = fName.value.trim(), country = fCountry.value, text = fText.value.trim(), F = window.A4C_FILTER;
+    if (!name) { say("Please add your first name.", "err"); fName.focus(); return; }
+    if (!country) { say("Please choose your country.", "err"); fCountry.focus(); return; }
+    if (text.length < 15) { say("Please write a little more, at least a sentence.", "err"); fText.focus(); return; }
+    if (F && (F.hasBadWords(name) || F.hasBadWords(text))) { say("Your story contains words we don't allow on this site. Please rephrase it.", "err"); fText.focus(); return; }
+    if (F && F.hasContactOrLink(text)) { say("Please leave out links, e-mail addresses and phone numbers.", "err"); fText.focus(); return; }
+    if (!fOk.checked) { say("Please tick the box to agree to your story being shown publicly.", "err"); fOk.focus(); return; }
+    sendBtn.disabled = true; say("Posting…");
+    fetch(API, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ name: name, country: country, text: text, website: fHp.value }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (res) {
+        if (!res.ok) { say(res.d.error || "Something went wrong. Please try again.", "err"); return; }
+        if (res.d.stories) { wall.stories = res.d.stories; renderWall(); }
+        form.reset(); countEl2.textContent = "0 / 600";
+        say("Thank you! Your words are on the wall.", "ok");
+      })
+      .catch(function () { say(location.protocol === "file:" ? "Posting only works on the live website." : "We couldn't reach the wall. Check your connection and try again.", "err"); })
+      .then(function () { sendBtn.disabled = false; });
+  });
+
+  // moderation: open the site with #admin at the end of the address
+  var adminBox = document.getElementById("admin"), adKey = document.getElementById("ad-key"), adMsg = document.getElementById("ad-msg");
+  var adUnlock = document.getElementById("ad-unlock"), adLock = document.getElementById("ad-lock");
+  function syncAdmin() {
+    adminBox.hidden = !(location.hash === "#admin" || adminKey);
+    adLock.hidden = !adminKey; adUnlock.hidden = !!adminKey; adKey.parentNode.hidden = !!adminKey;
+    adMsg.textContent = adminKey ? "Unlocked. Each post now has a Remove button." : "Enter the admin key to show a Remove button on every post.";
+  }
+  adUnlock.addEventListener("click", function () {
+    adminKey = adKey.value.trim(); adKey.value = "";
+    try { sessionStorage.setItem("a4c-admin", adminKey); } catch (e) {}
+    syncAdmin(); renderWall();
+  });
+  adLock.addEventListener("click", function () {
+    adminKey = ""; try { sessionStorage.removeItem("a4c-admin"); } catch (e) {}
+    syncAdmin(); renderWall();
+  });
+  wallEl.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-rm]"); if (!b || !adminKey) return;
+    if (b.dataset.armed !== "1") { b.dataset.armed = "1"; b.textContent = "Click again to remove"; return; }
+    b.disabled = true; b.textContent = "Removing…";
+    fetch(API + "?id=" + encodeURIComponent(b.dataset.rm), { method: "DELETE", headers: { "x-admin-key": adminKey } })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, d: d }; }); })
+      .then(function (res) {
+        if (res.status === 401) { adminKey = ""; try { sessionStorage.removeItem("a4c-admin"); } catch (e) {} syncAdmin(); adMsg.textContent = "That admin key is wrong. Please enter it again."; renderWall(); return; }
+        if (!res.ok) { adMsg.textContent = res.d.error || "Couldn't remove it. Try again."; b.disabled = false; b.textContent = "Remove"; return; }
+        wall.stories = res.d.stories || wall.stories.filter(function (x) { return x.id !== b.dataset.rm; }); renderWall(); adMsg.textContent = "Removed.";
+      })
+      .catch(function () { adMsg.textContent = "Couldn't reach the server. Try again."; b.disabled = false; b.textContent = "Remove"; });
+  });
+  window.addEventListener("hashchange", syncAdmin);
+  syncAdmin(); loadWall();
 
   // routing: the Erasmus+ guide is its own page
   var homeEl = document.getElementById("home"), eraEl = document.getElementById("erasmus-page"), navEra = document.getElementById("nav-erasmus");

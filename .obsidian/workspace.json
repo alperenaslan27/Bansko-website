@@ -190,6 +190,14 @@
   },
   "active": "10835b4f93f138f4",
   "lastOpenFiles": [
+    "netlify/lib/wall.mjs",
+    "netlify/lib/filter.mjs",
+    "netlify/functions/stories.mjs",
+    "netlify/lib",
+    "netlify/functions",
+    "netlify",
+    "package.json",
+    "netlify.toml",
     "outcomes/erasmus-explained.mp4",
     "outcomes/erasmus-explained-poster.jpg",
     "social/dogukan.jpg",
@@ -203,10 +211,7 @@
     "social/mario.jpg",
     "outcomes/awareness-video-2.mp4",
     "outcomes/awareness-video-1.mp4",
-    "outcomes/final-video.mp4",
-    "photos",
     "social/README.md",
-    "social",
     "outcomes/README.md",
     "README.md"
   ]

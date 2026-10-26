@@ -1,0 +1,12 @@
+# Netlify settings for the ACT 4 Change: #NoBullying website.
+# The build copies only the website files into _site, so nothing else gets published.
+[build]
+  command = "rm -rf _site && mkdir _site && cp -R index.html photos outcomes social _site/"
+  publish = "_site"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
