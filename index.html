@@ -140,6 +140,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .photos .todo, .photos img { aspect-ratio: 4 / 3; max-width: 100%; width: 100%; }
 .photos a { display: block; min-width: 0; }
 .photos a:first-child { grid-column: 1 / -1; }
+.photos.n3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.photos-note { margin: 0 0 -.6rem; color: var(--ink-soft); font-size: .72rem; }
 .photos a:first-child img { aspect-ratio: 16 / 9; }
 .photos img { display: block; transition: filter .15s ease; }
 .photos a:hover img { filter: brightness(1.06); }
@@ -359,6 +361,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* week in pictures */
 .gallery-h { font-family: var(--display); font-weight: 900; font-size: clamp(1.7rem, 3.6vw, 2.3rem); line-height: 1.05; margin-block: clamp(2.5rem, 6vw, 4rem) 1rem; }
 .gallery { columns: 4 200px; column-gap: .7rem; }
+.gallery-credit { margin-top: .4rem; }
 .gallery figure { break-inside: avoid; margin: 0 0 .7rem; position: relative; }
 .gallery img { display: block; width: 100%; height: auto; border-radius: 10px; }
 .gallery figcaption { position: absolute; left: .5rem; bottom: .5rem; background: var(--band-bg); color: var(--band-fg); font-family: var(--mono); font-size: .68rem; letter-spacing: .05em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 99px; }
@@ -470,6 +473,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
     </div>
     <h3 class="gallery-h" id="gallery">The week in pictures</h3>
     <div class="gallery" id="gallery-grid"></div>
+    <p class="fine gallery-credit">Many of these photos were taken by participant Mario (@mariodgphotos). Thank you, Mario!</p>
     <p class="rhythm"><span>Every day in Bansko</span><span><b>08:00</b> breakfast</span><span><b>11:30</b> coffee break</span><span><b>13:00</b> lunch</span><span><b>17:30</b> daily evaluation</span><span><b>18:30</b> dinner</span></p>
   </div>
 </section>
@@ -478,17 +482,17 @@ button { font: inherit; color: inherit; cursor: pointer; }
   <div class="wrap stack" style="gap:2rem">
     <div class="stack">
       <h2 class="brush sand" style="justify-self:start">Six teams, 42 people</h2>
-      <p class="lede">Each team is a group of young people aged 16–24 with one group leader. Team sizes ranged from four people from Greece to nine from Bulgaria, the host country. Places go first to young people with fewer opportunities: those from rural areas, those who have lived through bullying or discrimination, members of minority groups and Erasmus+ newcomers.</p>
+      <p class="lede">Each team is a group of young people aged 16–24 with one group leader. Places go first to young people with fewer opportunities: those from rural areas, those who have lived through bullying or discrimination, members of minority groups and Erasmus+ newcomers.</p>
     </div>
     <div class="teams">
-      <div class="team"><h3>Bulgaria</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>9 people. Host team. Travelled by bus, car or train.</p></div>
-      <div class="team"><h3>Greece</h3><div class="dots7"><i></i><i></i><i></i><i></i></div><p>4 people. Travelled by bus, car or train.</p></div>
-      <div class="team"><h3>Italy</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>8 people. Travelled by bus, train, car or plane.</p></div>
-      <div class="team"><h3>Romania</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>7 people. Travelled by bus, car or train.</p></div>
-      <div class="team"><h3>Spain</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>7 people. Travelled by plane.</p></div>
-      <div class="team"><h3>Türkiye</h3><div class="dots7"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>7 people. Travelled by bus, car or train.</p></div>
+      <div class="team"><h3>Bulgaria</h3><p>Host team. Travelled by bus, car or train.</p></div>
+      <div class="team"><h3>Greece</h3><p>Travelled by bus, car or train.</p></div>
+      <div class="team"><h3>Italy</h3><p>Travelled by bus, train, car or plane.</p></div>
+      <div class="team"><h3>Romania</h3><p>Travelled by bus, car or train.</p></div>
+      <div class="team"><h3>Spain</h3><p>Travelled by plane.</p></div>
+      <div class="team"><h3>Türkiye</h3><p>Travelled by bus, car or train.</p></div>
     </div>
-    <p class="legend"><span><i></i>Participant</span><span class="lead"><i></i>Group leader</span><span>Journeys under 1,200 km use low-emission transport.</span></p>
+    <p class="legend"><span>Journeys under 1,200 km used low-emission transport.</span></p>
   </div>
 </section>
 
@@ -797,7 +801,7 @@ window.A4C_FILTER = { hasBadWords: hasBadWords, hasContactOrLink: hasContactOrLi
   },
   {
    "src": "photos/2026-10-07-2.jpg",
-   "alt": "The Bulgarian team in traditional costume at the intercultural evening"
+   "alt": "Two participants presenting their group's work"
   },
   {
    "src": "photos/2026-10-07-3.jpg",
@@ -806,6 +810,28 @@ window.A4C_FILTER = { hasBadWords: hasBadWords, hasContactOrLink: hasContactOrLi
   {
    "src": "photos/2026-10-07-4.jpg",
    "alt": "A group discussion on the terrace with the mountains behind"
+  }
+ ],
+ "2026-10-08": [
+  {
+   "src": "photos/2026-10-08-1.jpg",
+   "alt": "Small groups working beside a flipchart of drawings",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-08-2.jpg",
+   "alt": "Two participants shaping clay at a table",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-08-3.jpg",
+   "alt": "Participants working together at a low table",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-08-4.jpg",
+   "alt": "Worksheets and notes from a group task",
+   "week": true
   }
  ],
  "2026-10-09": [
@@ -826,6 +852,23 @@ window.A4C_FILTER = { hasBadWords: hasBadWords, hasContactOrLink: hasContactOrLi
    "alt": "Participants in a group huddle"
   }
  ],
+ "2026-10-10": [
+  {
+   "src": "photos/2026-10-10-1.jpg",
+   "alt": "The group outside a museum in the old town of Bansko",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-10-2.jpg",
+   "alt": "Participants together on a street in Bansko",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-10-3.jpg",
+   "alt": "Participants listening outdoors in the sunshine",
+   "week": true
+  }
+ ],
  "2026-10-11": [
   {
    "src": "photos/2026-10-11-1.jpg",
@@ -843,9 +886,75 @@ window.A4C_FILTER = { hasBadWords: hasBadWords, hasContactOrLink: hasContactOrLi
    "src": "photos/2026-10-11-4.jpg",
    "alt": "Participants talking in small groups in the lounge"
   }
+ ],
+ "2026-10-12": [
+  {
+   "src": "photos/2026-10-12-1.jpg",
+   "alt": "Participants standing in a line during a scene",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-12-2.jpg",
+   "alt": "Four participants acting out a scene",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-12-3.jpg",
+   "alt": "A participant crouching to talk to someone during an activity",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-12-4.jpg",
+   "alt": "Participants facing each other in a role play",
+   "week": true
+  }
+ ],
+ "2026-10-13": [
+  {
+   "src": "photos/2026-10-13-1.jpg",
+   "alt": "A small group in discussion in the lounge",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-13-2.jpg",
+   "alt": "Two participants writing a plan together",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-13-3.jpg",
+   "alt": "Participants writing at a table",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-13-4.jpg",
+   "alt": "A small group working around a table with papers",
+   "week": true
+  }
+ ],
+ "2026-10-14": [
+  {
+   "src": "photos/2026-10-14-1.jpg",
+   "alt": "Participants sitting together in the hall",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-14-2.jpg",
+   "alt": "Participants presenting their work on paper",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-14-3.jpg",
+   "alt": "Participants in a circle for a reflection session",
+   "week": true
+  },
+  {
+   "src": "photos/2026-10-14-4.jpg",
+   "alt": "Participants talking in small groups",
+   "week": true
+  }
  ]
 };
-  var GALLERY = [{"src": "photos/week-1.jpg", "date": "2026-10-06"}, {"src": "photos/week-2.jpg", "date": "2026-10-07"}, {"src": "photos/week-3.jpg", "date": "2026-10-09"}, {"src": "photos/week-4.jpg", "date": "2026-10-11"}, {"src": "photos/week-5.jpg", "date": "2026-10-07"}, {"src": "photos/week-6.jpg", "date": "2026-10-06"}, {"src": "photos/week-7.jpg", "date": "2026-10-07"}, {"src": "photos/week-8.jpg", "date": "2026-10-09"}];
+  var GALLERY = [{"src": "photos/mario-01.jpg", "alt": "The group at the airport on arrival day", "credit": "@mariodgphotos"}, {"src": "photos/week-1.jpg", "date": "2026-10-06"}, {"src": "photos/mario-03.jpg", "alt": "Three participants taking a selfie in Bansko", "credit": "@mariodgphotos"}, {"src": "photos/mario-05.jpg", "alt": "Four participants sitting together under the trees", "credit": "@mariodgphotos"}, {"src": "photos/week-3.jpg", "date": "2026-10-09"}, {"src": "photos/mario-06.jpg", "alt": "Two participants making peace signs", "credit": "@mariodgphotos"}, {"src": "photos/mario-22.jpg", "alt": "Four participants on the terrace at night", "credit": "@mariodgphotos"}, {"src": "photos/mario-55.jpg", "alt": "Three participants smiling at a table in the evening", "credit": "@mariodgphotos"}, {"src": "photos/week-4.jpg", "date": "2026-10-11"}, {"src": "photos/mario-07.jpg", "alt": "Two participants in the sunshine", "credit": "@mariodgphotos"}, {"src": "photos/week-5.jpg", "date": "2026-10-07"}, {"src": "photos/mario-10.jpg", "alt": "Five participants together on the terrace at night", "credit": "@mariodgphotos"}, {"src": "photos/week-6.jpg", "date": "2026-10-06"}, {"src": "photos/mario-11.jpg", "alt": "Two participants on a bridge over a mountain river", "credit": "@mariodgphotos"}, {"src": "photos/mario-24.jpg", "alt": "Two participants laughing on the terrace", "credit": "@mariodgphotos"}, {"src": "photos/mario-44.jpg", "alt": "Three friends hugging and laughing", "credit": "@mariodgphotos"}, {"src": "photos/week-7.jpg", "date": "2026-10-07"}, {"src": "photos/mario-12.jpg", "alt": "Participants on a forest road in the mountains", "credit": "@mariodgphotos"}, {"src": "photos/week-8.jpg", "date": "2026-10-09"}, {"src": "photos/mario-13.jpg", "alt": "Two participants on the coach", "credit": "@mariodgphotos"}, {"src": "photos/mario-48.jpg", "alt": "Participants chatting in the hotel lobby", "credit": "@mariodgphotos"}, {"src": "photos/mario-16.jpg", "alt": "The group walking towards the mountains", "credit": "@mariodgphotos"}, {"src": "photos/mario-31.jpg", "alt": "Two participants posing by a wooden pillar", "credit": "@mariodgphotos"}, {"src": "photos/mario-45.jpg", "alt": "Three participants posing for a tilted selfie", "credit": "@mariodgphotos"}, {"src": "photos/mario-19.jpg", "alt": "A participant with a big dog", "credit": "@mariodgphotos"}, {"src": "photos/mario-20.jpg", "alt": "Three participants giving a thumbs-up", "credit": "@mariodgphotos"}, {"src": "photos/mario-61.jpg", "alt": "Friends relaxing together in the lounge", "credit": "@mariodgphotos"}, {"src": "photos/mario-21.jpg", "alt": "Three participants together in the hall", "credit": "@mariodgphotos"}, {"src": "photos/mario-67.jpg", "alt": "Two participants dancing at the party night", "credit": "@mariodgphotos"}, {"src": "photos/mario-69.jpg", "alt": "Dancing in the hall at the party night", "credit": "@mariodgphotos"}];
   var DAYS = [
     { n: 1, iso: "2026-10-06", wd: "Tue", title: "Getting to know each other",
       about: "The first working day is about names, faces and trust. The Bulgarian team opens the programme and walks everyone through what the next nine days hold.",
@@ -906,7 +1015,7 @@ window.A4C_FILTER = { hasBadWords: hasBadWords, hasContactOrLink: hasContactOrLi
     var d = DAYS[current - 1], s = status(d);
     var photos, dayPhotos = PHOTOS[d.iso] || [];
     if (dayPhotos.length) {
-      photos = '<div class="photos">' + dayPhotos.map(function (p) { return '<a href="' + esc(p.src) + '" target="_blank" rel="noopener"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || "") + '" loading="lazy"></a>'; }).join("") + '</div>';
+      photos = (dayPhotos[0].week ? '<p class="photos-note mono">Moments from the week</p>' : "") + '<div class="photos n' + dayPhotos.length + '">' + dayPhotos.map(function (p) { return '<a href="' + esc(p.src) + '" target="_blank" rel="noopener"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || "") + '" loading="lazy"></a>'; }).join("") + '</div>';
     } else if (s === "next") {
       photos = "";
     } else {
@@ -943,7 +1052,9 @@ window.A4C_FILTER = { hasBadWords: hasBadWords, hasContactOrLink: hasContactOrLi
   // week in pictures
   var MONTH = "October";
   document.getElementById("gallery-grid").innerHTML = GALLERY.map(function (g) {
-    return '<figure><a href="' + esc(g.src) + '" target="_blank" rel="noopener"><img src="' + esc(g.src) + '" alt="A moment from the exchange, ' + +g.date.slice(8) + ' ' + MONTH + '" loading="lazy"></a><figcaption>' + +g.date.slice(8) + ' ' + MONTH + '</figcaption></figure>';
+    var cap = g.credit ? "Photo: " + g.credit : +g.date.slice(8) + " " + MONTH;
+    var alt = g.alt || ("A moment from the exchange, " + +g.date.slice(8) + " " + MONTH);
+    return '<figure><a href="' + esc(g.src) + '" target="_blank" rel="noopener"><img src="' + esc(g.src) + '" alt="' + esc(alt) + '" loading="lazy"></a><figcaption>' + esc(cap) + '</figcaption></figure>';
   }).join("");
 
   // outcomes: add files as { type: "video" | "pdf" | "photos" | "link", title: "...", url: "https://..." }
